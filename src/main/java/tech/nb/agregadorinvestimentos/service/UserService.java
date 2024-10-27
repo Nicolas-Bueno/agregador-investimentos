@@ -1,6 +1,7 @@
 package tech.nb.agregadorinvestimentos.service;
 
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -29,7 +30,13 @@ public class UserService {
             null);
 
         var userSaved = repository.save(entity);
-        
+
         return userSaved.getUserId();
+    }
+
+    public Optional<User> getUserById(String userId){
+
+        return repository.findById(UUID.fromString(userId));
+
     }
 }
