@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import tech.nb.agregadorinvestimentos.dto.CreateUserDto;
+import tech.nb.agregadorinvestimentos.dto.UpdateUserDTO;
 import tech.nb.agregadorinvestimentos.entity.User;
 import tech.nb.agregadorinvestimentos.service.UserService;
 
@@ -48,6 +50,15 @@ public class UserController {
         var users = service.getAllUser();
 
         return ResponseEntity.ok(users);
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<Void> updateUserById(@PathVariable("userId") String userId,
+                                                @RequestBody UpdateUserDTO updateUserDTO){
+
+        service.updateUserById(userId, updateUserDTO);
+        return ResponseEntity.noContent().build(); 
+                        
     }
 
     @DeleteMapping("/{userId}")
