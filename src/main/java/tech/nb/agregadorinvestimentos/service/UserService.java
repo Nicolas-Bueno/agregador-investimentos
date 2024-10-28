@@ -83,6 +83,7 @@ public class UserService {
         validateLength(password, failures);
         validateUppercase(password,failures);
         validateLowerCase(password,failures);
+        validateNumber(password,failures);
 
         return failures;
         
@@ -103,6 +104,12 @@ public class UserService {
     private void validateLowerCase(String password, List<String> failures){
         if (!Pattern.matches(".*[a-z].*", password)) {
             failures.add("A senha deve possuir pelo menos uma letra minuscula.");
+        }
+    }
+
+    private void validateNumber(String password, List<String> failures){
+        if (!Pattern.matches(".*[0-9].*", password)) {
+            failures.add("A senha deve possuir pelo menos um numero");
         }
     }
 }
