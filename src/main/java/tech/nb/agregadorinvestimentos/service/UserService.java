@@ -1,6 +1,7 @@
 package tech.nb.agregadorinvestimentos.service;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -38,5 +39,9 @@ public class UserService {
 
         return repository.findById(UUID.fromString(userId));
 
+    }
+
+    public List<User> getAllUser(){
+        return repository.findAll();
     }
 }

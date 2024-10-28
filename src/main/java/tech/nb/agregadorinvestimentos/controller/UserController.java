@@ -1,6 +1,7 @@
 package tech.nb.agregadorinvestimentos.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +40,13 @@ public class UserController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUser(){
+        var users = service.getAllUser();
+
+        return ResponseEntity.ok(users);
     }
     
 }
