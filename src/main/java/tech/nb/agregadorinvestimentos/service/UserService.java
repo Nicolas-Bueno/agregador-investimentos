@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -81,6 +81,7 @@ public class UserService {
         List<String> failures = new ArrayList<>();
 
         validateLength(password, failures);
+        validateUppercase(password,failures);
 
         return failures;
         
@@ -88,7 +89,13 @@ public class UserService {
 
     private void validateLength(String password, List<String> failures){
         if (password != null && password.length() < 8) {
-            failures.add("A senha deve possuir 8 ou mais caracteres.");
+            failures.add("A senha deve possuir pelo menos 8 caracteres.");
+        }
+    }
+
+    private void validateUppercase(String password, List<String> failures){
+        if (!Pattern.matches(".*[A-Z].*", password)) {
+            failures.add("A senha deve possuir pelo menos uma letra maiúscula.");
         }
     }
 }
