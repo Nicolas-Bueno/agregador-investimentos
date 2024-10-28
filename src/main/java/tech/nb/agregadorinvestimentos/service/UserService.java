@@ -84,6 +84,7 @@ public class UserService {
         validateUppercase(password,failures);
         validateLowerCase(password,failures);
         validateNumber(password,failures);
+        validateSpecialCharacter(password,failures);
 
         return failures;
         
@@ -110,6 +111,12 @@ public class UserService {
     private void validateNumber(String password, List<String> failures){
         if (!Pattern.matches(".*[0-9].*", password)) {
             failures.add("A senha deve possuir pelo menos um numero");
+        }
+    }
+
+    private void validateSpecialCharacter(String password, List<String> failures){
+        if (!Pattern.matches(".*[\\W].*", password)) {
+            failures.add("A senha deve possuir pelo menos um caracter especial");
         }
     }
 }
