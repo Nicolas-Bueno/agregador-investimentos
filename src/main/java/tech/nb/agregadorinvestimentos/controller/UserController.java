@@ -28,10 +28,15 @@ public class UserController {
     private UserService service;
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody CreateUserDto createUserDto) {
-        var userId = service.createUser(createUserDto);
+    public ResponseEntity<FailureResponse> createUser(@RequestBody CreateUserDto createUserDto) {   
+        var failures = service.validatePass(createUserDto.password());
 
-        return ResponseEntity.created(URI.create("/v1/users/" + userId.toString())).build();
+        if (failures.isEmpty()) {
+            var userId = service.createUser(createUserDto);
+            return ResponseEntity.created(URI.create("/v1/users/" + userId.toString())).build();
+        }
+
+        return ResponseEntity.badRequest().body(new FailureResponse(failures));
     }
 
     @GetMapping("/{userId}")
@@ -53,12 +58,16 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<Void> updateUserById(@PathVariable("userId") String userId,
+    public ResponseEntity<FailureResponse> updateUserById(@PathVariable("userId") String userId,
                                                 @RequestBody UpdateUserDTO updateUserDTO){
 
-        service.updateUserById(userId, updateUserDTO);
-        return ResponseEntity.noContent().build(); 
-                        
+        var failures = service.validatePass(updateUserDTO.password());
+        if (failures.isEmpty()) {
+            service.updateUserById(userId, updateUserDTO);
+            return ResponseEntity.noContent().build(); 
+        }
+        
+        return ResponseEntity.badRequest().body(new FailureResponse(failures));                
     }
 
     @DeleteMapping("/{userId}")

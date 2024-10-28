@@ -1,6 +1,7 @@
 package tech.nb.agregadorinvestimentos.service;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -73,6 +74,21 @@ public class UserService {
 
         if (userExists) {
             repository.deleteById(id);
+        }
+    }
+
+    public List<String> validatePass(String password){
+        List<String> failures = new ArrayList<>();
+
+        validateLength(password, failures);
+
+        return failures;
+        
+    }
+
+    private void validateLength(String password, List<String> failures){
+        if (password != null && password.length() < 8) {
+            failures.add("A senha deve possuir 8 ou mais caracteres.");
         }
     }
 }
