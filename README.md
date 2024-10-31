@@ -17,3 +17,21 @@ Construir uma REST API que realiza operações CRUD para gerenciar usuários de 
 - 🚀 **Spring Boot**
 - 🐬 **MySQL** (rodando com Docker Compose)
 - 🗂️ **Hibernate** (para ORM - mapeamento objeto-relacional)
+
+## 🔗 Endpoints
+
+A API inclui os seguintes endpoints para manipulação de usuários:
+
+| Método | Endpoint              | Descrição                    |
+|--------|------------------------|------------------------------|
+| POST   | `/api/usuarios`        | Criação de um novo usuário   |
+| GET    | `/api/usuarios`        | Consulta todos os usuários   |
+| GET    | `/api/usuarios/{id}`   | Consulta um usuário por ID   |
+| PUT    | `/api/usuarios/{id}`   | Atualiza um usuário          |
+| DELETE | `/api/usuarios/{id}`   | Deleta um usuário            |
+
+## 🏗️ Estrutura do Projeto
+
+- **Controller**: Responsável por gerenciar as requisições HTTP.
+- **Service**: Camada de lógica de negócios, onde a lógica de manipulação dos dados é aplicada.
+- **Repository**: Interface para acesso ao banco de dados, utilizando o JPA/Hibernate para mapear as entidades automaticamente.
