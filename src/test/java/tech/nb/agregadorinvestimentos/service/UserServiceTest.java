@@ -54,7 +54,7 @@ class UserServiceTest {
                     "email@email.com",
                     "password",
                     Instant.now(),
-                    null
+                    null,null
             );
             doReturn(user).when(userRepository).save(userArgumentCaptor.capture());
             var input = new CreateUserDto(
@@ -104,10 +104,9 @@ class UserServiceTest {
                     UUID.randomUUID(),
                     "username",
                     "email@email.com",
-                    
                     "password",
                     Instant.now(),
-                    null
+                    null,null
             );
             doReturn(Optional.of(user))
                     .when(userRepository)
@@ -154,7 +153,7 @@ class UserServiceTest {
                     "email@email.com",
                     "password",
                     Instant.now(),
-                    null
+                    null,null
             );
             var userList = List.of(user);
             doReturn(userList)
@@ -241,7 +240,7 @@ class UserServiceTest {
                     "email@email.com",
                     "password",
                     Instant.now(),
-                    null
+                    null,null
             );
             doReturn(Optional.of(user))
                     .when(userRepository)

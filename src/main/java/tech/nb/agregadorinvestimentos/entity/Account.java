@@ -1,5 +1,6 @@
 package tech.nb.agregadorinvestimentos.entity;
 
+import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -41,4 +42,7 @@ public class Account {
     @OneToOne(mappedBy = "account")
     @PrimaryKeyJoinColumn
     private BillingAddress billingAddress;
+
+    @OneToMany(mappedBy = "account")
+    private List<AccountStock> accountStocks;
 }

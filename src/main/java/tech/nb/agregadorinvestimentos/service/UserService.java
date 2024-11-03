@@ -30,7 +30,7 @@ public class UserService {
             createUserDto.email(),
             createUserDto.password(),
             Instant.now(),
-            null);
+            null,null);
 
         var userSaved = repository.save(entity);
 
