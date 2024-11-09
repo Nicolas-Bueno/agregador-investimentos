@@ -3,6 +3,7 @@ package tech.nb.agregadorinvestimentos.entity;
 import java.util.List;
 import java.util.UUID;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,7 +27,7 @@ import lombok.Setter;
 @Entity
 @Table(name="tb-accounts")
 public class Account {
-
+ 
     @Id
     @Column(name="account_id")
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -39,7 +40,7 @@ public class Account {
     @JoinColumn(name="user_id")
     private User user;
 
-    @OneToOne(mappedBy = "account")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "account")
     @PrimaryKeyJoinColumn
     private BillingAddress billingAddress;
 

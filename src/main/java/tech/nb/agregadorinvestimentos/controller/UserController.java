@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import tech.nb.agregadorinvestimentos.dto.CreateAccountDto;
 import tech.nb.agregadorinvestimentos.dto.CreateUserDto;
 import tech.nb.agregadorinvestimentos.dto.UpdateUserDTO;
 import tech.nb.agregadorinvestimentos.entity.User;
@@ -75,6 +76,16 @@ public class UserController {
         service.deleteById(userId);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{userId}/accounts")
+    public ResponseEntity<Void> semnome(@PathVariable("userId") String userId,
+                                @RequestBody CreateAccountDto createAccountDto) {
+
+        service.createAccount(userId, createAccountDto);  
+
+        return ResponseEntity.ok().build();
+
     }
     
 }

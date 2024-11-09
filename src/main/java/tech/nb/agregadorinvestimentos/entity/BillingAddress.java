@@ -2,6 +2,7 @@ package tech.nb.agregadorinvestimentos.entity;
 
 import java.util.UUID;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -26,8 +27,8 @@ public class BillingAddress {
     @Column(name = "account_id")
     private UUID id;
 
+    @OneToOne(cascade = CascadeType.ALL)
     @MapsId
-    @OneToOne
     @JoinColumn(name = "account_id")
     private Account account;
 
@@ -35,5 +36,5 @@ public class BillingAddress {
     private String street;
 
     @Column(name = "number")
-    private String number;
+    private Number number;
 }

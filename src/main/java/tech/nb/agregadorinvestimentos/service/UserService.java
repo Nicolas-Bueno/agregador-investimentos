@@ -8,11 +8,18 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import tech.nb.agregadorinvestimentos.dto.CreateAccountDto;
 import tech.nb.agregadorinvestimentos.dto.CreateUserDto;
 import tech.nb.agregadorinvestimentos.dto.UpdateUserDTO;
+import tech.nb.agregadorinvestimentos.entity.Account;
+import tech.nb.agregadorinvestimentos.entity.BillingAddress;
 import tech.nb.agregadorinvestimentos.entity.User;
+import tech.nb.agregadorinvestimentos.repository.AccountRepository;
+import tech.nb.agregadorinvestimentos.repository.BillingAddressRepository;
 import tech.nb.agregadorinvestimentos.repository.UserRepository;
 
 @Service
@@ -20,6 +27,12 @@ public class UserService {
 
     @Autowired
     private UserRepository repository;
+
+    @Autowired
+    private AccountRepository accountRepository;
+
+    @Autowired
+    private BillingAddressRepository billingAddressRepository;
 
     public UUID createUser(CreateUserDto createUserDto){
 
@@ -118,5 +131,29 @@ public class UserService {
         if (!Pattern.matches(".*[\\W].*", password)) {
             failures.add("A senha deve possuir pelo menos um caracter especial");
         }
+    }
+
+    public void createAccount(String userId, CreateAccountDto createAccountDto) {
+       
+        var user = repository.findById(UUID.fromString(userId))
+            .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        
+        var account =  new Account(
+            UUID.randomUUID(),
+            createAccountDto.description(),
+            user,
+            null,
+            new ArrayList<>()
+            );
+
+        var accountCreated = accountRepository.save(account);
+
+        var billingAddress = new BillingAddress(accountCreated.getAccountId(),
+            account,
+            createAccountDto.street(),
+            createAccountDto.number()
+            );
+
+        billingAddressRepository.save(billingAddress);
     }
 }
